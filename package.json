@@ -1,6 +1,6 @@
 {
   "name": "simple-json-editor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is a package to easily edit json files",
   "main": "index.js",
   "scripts": {
