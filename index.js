@@ -8,7 +8,7 @@ const path = require("path")
 
 class Editor {
     /**
-     * 
+     * @description Initialise the Editor with the filename of the JSON file you want to edit.
      * @param {String} file - The path of the file you want to edit. Must be a .json file
      */
     constructor(file) {
@@ -28,7 +28,7 @@ class Editor {
         };
     };
     /**
-     * 
+     * @description Set something as something in your JSON file.
      * @param {String} key - The key you want to set the value as.
      * @param {*} value - The value you want to set the key as.
      * @param {Boolean} [ignore=false] - If you want to ignore the point seperator in your key set this to true!
@@ -70,6 +70,12 @@ class Editor {
             })
         }
     };
+    /**
+     * @description Get a the value of a certain key out of your JSON file.
+     * @param {String} key - The key you want to get the value from.
+     * @param {Boolean} [ignore=false] - If you want to ignore the point seperator in your key set this to true!
+     * @returns Returns the element you wanted to get or undefined
+     */
     get(key, ignore) {
         let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf8"}).toString());
         if (ignore === true) {
@@ -88,10 +94,26 @@ class Editor {
             return json;
         }
     };
-    all() {
+    /**
+     * @description Get the whole JSON object out of the Editor file.
+     * @param {Boolean} [stringify=false] - If you would like to get the whole object in stringified set this to true.
+     * @returns Returns the whole object out of the JSON file.
+     */
+    all(stringify) {
         let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf-8"}).toString());
-        return json;
+        if (stringify === true) {
+            return JSON.stringify(json);
+        } else {
+            return json;
+        }
     };
+    /**
+     * @description Push a certain value to an array within your JSON.
+     * @param {String} key - The key where the array you want the element to push to is located.
+     * @param {String} value - The value you would like to push to the end of the array
+     * @param {Boolean} [ignore=false] - If you want to ignore the point seperator in your key set this to true!
+     * @returns Returns you the whole array with pushed value
+     */
     push(key, value, ignore) {
         let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf-8"}).toString());
         if (ignore === true) {
