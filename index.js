@@ -114,4 +114,3 @@ class Editor {
         };
     };
 };
-console.log(new Editor("lol.json").all());
