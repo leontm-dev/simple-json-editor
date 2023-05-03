@@ -1,0 +1,22 @@
+{
+  "name": "simple-json-editor",
+  "version": "0.0.1",
+  "description": "This is a package to easily edit json files",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "JSON",
+    "Editor",
+    "JS",
+    "Simple",
+    "Database"
+  ],
+  "author": "LeonTM",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "prettier": "^2.8.8"
+  }
+}
