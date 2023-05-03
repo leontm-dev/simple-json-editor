@@ -143,5 +143,41 @@ class Editor {
             }
         };
     };
+    /**
+     * @description Pop the last value of an array within your JSON.
+     * @param {String} key - The key where the array you want the element to pop from is located.
+     * @param {*} [ignore=false] - If you want to ignore the point seperator in your key set this to true!
+     * @returns Returns you the whole array without the poped value
+     */
+    pop(key, ignore) {
+        let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf-8"}).toString());
+        if (ignore === true) {
+            let elem = json[String(key)];
+            if (typeof elem === Array) {
+                elem.pop(value);
+                this.set(key, elem, true);
+                return elem;
+            } else {
+                return new Error("TypeError: The path does not lead to an array");
+            }
+        } else {
+            for (var i = 0; i < keys.length; i++) {
+                var keys = key.split('.');
+                if (json && json.hasOwnProperty(keys[i])) {
+                    json = json[keys[i]];
+                } else {
+                    return undefined
+                }
+            };
+            if (typeof json === Array) {
+                json.pop(value);
+                this.set(key, json, false);
+                return json;
+            } else {
+                return new Error("TypeError: The path does not lead to an array");
+            }
+        }
+    }
 };
 module.exports = Editor;
+Array().pop
