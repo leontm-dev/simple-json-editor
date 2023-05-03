@@ -1,6 +1,6 @@
 {
   "name": "simple-json-editor",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "This is a package to easily edit json files",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "prettier": "^2.8.8",
-    "simple-json-editor": "^0.0.3"
+    "simple-json-editor": "^0.0.4"
   },
   "funding": {
     "type": "BuyMeACoffee",
