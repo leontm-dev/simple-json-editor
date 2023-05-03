@@ -19,5 +19,9 @@
     "fs": "^0.0.1-security",
     "prettier": "^2.8.8",
     "simple-json-editor": "^0.0.2"
+  },
+  "repository": {
+    "url": "https://github.com/leontm-dev/simple-json-editor.git",
+    "type": "git"
   }
 }
