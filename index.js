@@ -98,6 +98,7 @@ class Editor {
             
         } else {
             for (var i = 0; i < keys.length; i++) {
+                var keys = key.split('.');
                 if (json && json.hasOwnProperty(keys[i])) {
                     json = json[keys[i]];
                 } else {
