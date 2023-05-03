@@ -117,7 +117,14 @@ class Editor {
     push(key, value, ignore) {
         let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf-8"}).toString());
         if (ignore === true) {
-            
+            let elem = json[String(key)];
+            if (typeof elem === Array) {
+                elem.push(value);
+                this.set(key, elem, true);
+                return elem;
+            } else {
+                return new Error("TypeError: The path does not lead to an array");
+            }
         } else {
             for (var i = 0; i < keys.length; i++) {
                 var keys = key.split('.');
