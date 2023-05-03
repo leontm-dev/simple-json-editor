@@ -20,6 +20,10 @@
     "prettier": "^2.8.8",
     "simple-json-editor": "^0.0.2"
   },
+  "funding": {
+    "type": "BuyMeACoffee",
+    "url": "https://www.buymeacoffee.com/leontm"
+  },
   "repository": {
     "url": "https://github.com/leontm-dev/simple-json-editor.git",
     "type": "git"
