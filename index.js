@@ -178,6 +178,50 @@ class Editor {
             }
         }
     }
+    /**
+     * @description Subtract a value with a subtracting.
+     * @param {String} key - The key where the array you want the element to pop from is located.
+     * @param {*} [subtracting=1] - The number you want to substract the value behind the key with-
+     * @param {*} [ignore=false] - If you want to ignore the point seperator in your key set this to true!
+     * @returns Returns the difference of the value and the subtracting
+     */
+    substract(key, subtracting, ignore) {
+        let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf-8"}).toString());
+        if (ignore === true) {
+            let elem = json[String(key)];
+            if (typeof elem === Number) {
+                if (typeof subtracting === Number) {
+                    elem = elem - subtracting;
+                } else {
+                    elem--;
+                };
+                this.set(key, elem, true);
+                return elem;
+            } else {
+                return new Error("TypeError: The path does not lead to an array");
+            }
+        } else {
+            for (var i = 0; i < keys.length; i++) {
+                var keys = key.split('.');
+                if (json && json.hasOwnProperty(keys[i])) {
+                    json = json[keys[i]];
+                } else {
+                    return undefined
+                }
+            };
+            if (typeof json === Number) {
+                if (typeof subtracting === Number) {
+                    json = json - subtracting;
+                } else {
+                    json--;
+                };
+                this.set(key, json, false);
+                return json;
+            } else {
+                return new Error("TypeError: The path does not lead to an array");
+            }
+        }
+    };
+
 };
 module.exports = Editor;
-Array().pop
