@@ -79,7 +79,7 @@ class Editor {
     get(key, ignore) {
         let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf8"}).toString());
         if (ignore === true) {
-                console.log("hallo");
+                
         } else {
             var keys = key.split('.'); // Teile den Key an den Punkten auf
             // Das Objekt, aus dem der Wert gelesen werden soll
@@ -107,6 +107,32 @@ class Editor {
             return json;
         }
     };
+    delete(key, ignore) {
+        let json = JSON.parse(fs.readFileSync(this.file, { "encoding": "utf-8" }).toString());
+        if (ignore === true) {
+            delete json[String(key)];
+            fs.writeFile(this.file, prettier.format(JSON.stringify(json), {"parser": "json-stringify"}), () => {return json});
+        } else {
+            // let file = this.file;
+            // function deleteKey(obj, key) {
+            //     var keys = key.split('.'); // Teile den Key an den Punkten auf
+            //     // Überprüfe, ob das Objekt den ersten Key enthält
+            //     if (obj.hasOwnProperty(keys[0])) {
+            //         // Überprüfe, ob der Key weitere Punkte enthält
+            //         if (keys.length > 1) {
+            //             // Das Objekt enthält weitere verschachtelte Objekte
+            //             deleteKey(obj[keys[0]], keys.slice(1).join('.'));
+            //         } else {
+            //             // Der Key ist der letzte im Pfad, lösche ihn
+            //             delete obj[keys[0]];
+            //             fs.writeFile(file, prettier.format(JSON.stringify(obj), {"parser": "json-stringify"}), () => {return obj});
+            //         }
+            //     }
+            // };
+            // deleteKey(json, key);
+        }
+    };
+    // Array Functions
     /**
      * @description Push a certain value to an array within your JSON.
      * @param {String} key - The key where the array you want the element to push to is located.
@@ -178,6 +204,7 @@ class Editor {
             }
         }
     }
+    // Number Functions
     /**
      * @description Subtract a value with a subtracting.
      * @param {String} key - The key where the array you want the element to pop from is located.
@@ -222,6 +249,5 @@ class Editor {
             }
         }
     };
-
 };
 module.exports = Editor;
