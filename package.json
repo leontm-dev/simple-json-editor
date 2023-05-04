@@ -25,7 +25,11 @@
     "url": "https://www.buymeacoffee.com/leontm"
   },
   "repository": {
-    "url": "https://github.com/leontm-dev/simple-json-editor.git",
+    "url": "git+https://github.com/leontm-dev/simple-json-editor.git",
     "type": "git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/leontm-dev/simple-json-editor/issues"
+  },
+  "homepage": "https://github.com/leontm-dev/simple-json-editor#readme"
 }
