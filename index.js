@@ -79,7 +79,7 @@ class Editor {
     get(key, ignore) {
         let json = JSON.parse(fs.readFileSync(this.file, {"encoding": "utf8"}).toString());
         if (ignore === true) {
-                
+              return json[key];
         } else {
             var keys = key.split('.'); // Teile den Key an den Punkten auf
             // Das Objekt, aus dem der Wert gelesen werden soll
@@ -113,23 +113,24 @@ class Editor {
             delete json[String(key)];
             fs.writeFile(this.file, prettier.format(JSON.stringify(json), {"parser": "json-stringify"}), () => {return json});
         } else {
-            // let file = this.file;
-            // function deleteKey(obj, key) {
-            //     var keys = key.split('.'); // Teile den Key an den Punkten auf
-            //     // Überprüfe, ob das Objekt den ersten Key enthält
-            //     if (obj.hasOwnProperty(keys[0])) {
-            //         // Überprüfe, ob der Key weitere Punkte enthält
-            //         if (keys.length > 1) {
-            //             // Das Objekt enthält weitere verschachtelte Objekte
-            //             deleteKey(obj[keys[0]], keys.slice(1).join('.'));
-            //         } else {
-            //             // Der Key ist der letzte im Pfad, lösche ihn
-            //             delete obj[keys[0]];
-            //             fs.writeFile(file, prettier.format(JSON.stringify(obj), {"parser": "json-stringify"}), () => {return obj});
-            //         }
-            //     }
-            // };
-            // deleteKey(json, key);
+            let file = this.file;
+            function deleteKey(obj, key) {
+                var keys = key.split('.'); // Teile den Key an den Punkten auf
+
+                // Überprüfe, ob das Objekt den ersten Key enthält
+                if (obj.hasOwnProperty(keys[0])) {
+                    // Überprüfe, ob der Key weitere Punkte enthält
+                    if (keys.length > 1) {
+                        // Das Objekt enthält weitere verschachtelte Objekte
+                        deleteKey(obj[keys[0]], keys.slice(1).join('.'));
+                    } else {
+                        // Der Key ist der letzte im Pfad, lösche ihn
+                        delete obj[keys[0]];
+                        fs.writeFile(file, prettier.format(JSON.stringify(json), {"parser": "json-stringify"}), () => {return json});
+                    }
+                }
+            };
+            deleteKey(json, key);
         }
     };
     // Array Functions
@@ -251,3 +252,93 @@ class Editor {
     };
 };
 module.exports = Editor;
+// const fs = require('fs-extra');
+
+// class Editor {
+//   constructor(filePath, options = {}) {
+//     if (!fs.exists(filePath)) {
+//         throw new Error(`No such file or directory: ${filePath}`)
+//     } else {
+//         this.filePath = filePath;
+//         this.options = options;
+//     }
+//   }
+
+//   async read() {
+//     const data = await fs.readJSON(this.filePath);
+//     return this._ignoreKeys(data);
+//   }
+
+//   async set(path, value) {
+//     const data = await this.read();
+//     this._set(data, path, value);
+//     await fs.writeJSON(this.filePath, data, this.options);
+//   }
+
+//   async get(path) {
+//     const data = await this.read();
+//     return this._get(data, path);
+//   }
+
+//   async delete(path) {
+//     const data = await this.read();
+//     this._delete(data, path);
+//     await fs.writeJSON(this.filePath, data, this.options);
+//   }
+
+//   _ignoreKeys(data) {
+//     if (this.options.ignoreKeys) {
+//       const keys = this.options.ignoreKeys.split('.');
+//       keys.forEach(key => {
+//         const [match, index] = key.match(/\[(\d+)\]/) || [];
+//         if (match) {
+//           data = data.map(item => {
+//             item[index] = this._ignoreKeys(item[index]);
+//             return item;
+//           });
+//         } else {
+//           data = data[key];
+//         }
+//       });
+//     }
+//     return data;
+//   }
+
+//   _set(data, path, value) {
+//     const keys = path.split('.');
+//     let obj = data;
+//     keys.forEach((key, index) => {
+//       if (index === keys.length - 1) {
+//         obj[key] = value;
+//       } else {
+//         if (!obj[key]) {
+//           obj[key] = {};
+//         }
+//         obj = obj[key];
+//       }
+//     });
+//   }
+
+//   _get(data, path) {
+//     const keys = path.split('.');
+//     let obj = data;
+//     keys.forEach(key => {
+//       obj = obj[key];
+//     });
+//     return obj;
+//   }
+
+//   _delete(data, path) {
+//     const keys = path.split('.');
+//     let obj = data;
+//     keys.forEach((key, index) => {
+//       if (index === keys.length - 1) {
+//         delete obj[key];
+//       } else {
+//         obj = obj[key];
+//       }
+//     });
+//   }
+// }
+
+// module.exports = Editor;
